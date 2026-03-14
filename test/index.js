@@ -9,13 +9,15 @@ const mqlStub =
   (capturedCalls = []) =>
     async (url, opts) => {
       capturedCalls.push({ url, opts })
+      if (opts && opts.data) {
+        return { data: { content: '<html>page</html>' } }
+      }
       return {
         data: {
           results: [
             { url: 'https://example.com/1', title: 'Result 1' },
             { url: 'https://example.com/2', title: 'Result 2' }
-          ],
-          html: '<html>page</html>'
+          ]
         }
       }
     }
@@ -61,13 +63,16 @@ test('returns mapped results with original properties', async t => {
   t.is(page.results[1].url, 'https://example.com/2')
 })
 
-test('page html() returns the page HTML', async t => {
-  const google = createModule(mqlStub())({})
+test('page html() fetches Google SERP HTML lazily', async t => {
+  const calls = []
+  const google = createModule(mqlStub(calls))({})
 
-  const page = await google('test')
+  const page = await google('test query')
   const html = await page.html()
 
   t.is(html, '<html>page</html>')
+  t.is(calls[1].url, 'https://www.google.com/search?q=test%20query')
+  t.deepEqual(calls[1].opts.data, { content: { attr: 'html' } })
 })
 
 test('result html() fetches content from result URL', async t => {
@@ -79,8 +84,7 @@ test('result html() fetches content from result URL', async t => {
     }
     return {
       data: {
-        results: [{ url: 'https://example.com/article', title: 'Article' }],
-        html: '<html></html>'
+        results: [{ url: 'https://example.com/article', title: 'Article' }]
       }
     }
   }
@@ -109,11 +113,11 @@ test('next() preserves all URL params', async t => {
   const calls = []
   const google = createModule(mqlStub(calls))({})
 
-  const page1 = await google('test', { device: 'mobile', lang: 'fr', limit: 5 })
+  const page1 = await google('test', { period: 'week', lang: 'fr', limit: 5 })
   await page1.next()
 
   const url = new URL(calls[1].url)
-  t.is(url.searchParams.get('device'), 'mobile')
+  t.is(url.searchParams.get('period'), 'week')
   t.is(url.pathname, '/test/5/fr')
 })
 

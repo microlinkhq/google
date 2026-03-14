@@ -9,21 +9,29 @@ const buildPath = (query, limit, lang) =>
     .filter(v => v !== undefined)
     .join('/')
 
-const buildUrl = (query, { limit, lang, device, period, domain } = {}) => {
+const buildUrl = (query, { limit, lang, period, domain } = {}) => {
   const url = new URL(`https://${DOMAIN}/${buildPath(query, limit, lang)}`)
-  if (device) url.searchParams.set('device', device)
   if (period) url.searchParams.set('period', period)
   if (domain) url.searchParams.set('domain', domain)
   return url
 }
 
-const fetchPage = async (url, mqlOpts, offset) => {
+const fetchPage = async (url, mqlOpts, offset, query) => {
   url.searchParams.set('start', String(offset))
   const { data } = await mql(url.toString(), mqlOpts)
-  const { results, html } = data
+  const { results } = data
 
   return {
-    html: () => Promise.resolve(html),
+    html: async () => {
+      const { data } = await mql(
+        `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+        {
+          ...mqlOpts,
+          data: { content: { attr: 'html' } }
+        }
+      )
+      return data.content
+    },
     results: results.map(result => ({
       ...result,
       html: async () => {
@@ -35,17 +43,14 @@ const fetchPage = async (url, mqlOpts, offset) => {
       }
     })),
     next: () =>
-      fetchPage(new URL(url.toString()), mqlOpts, offset + results.length)
+      fetchPage(new URL(url.toString()), mqlOpts, offset + results.length, query)
   }
 }
 
 module.exports = ctxOpts => {
-  return async (
-    query,
-    { limit, lang, device, period, domain, ...opts } = {}
-  ) => {
-    const url = buildUrl(query, { limit, lang, device, period, domain })
-    return fetchPage(url, { ...ctxOpts, ...opts }, 0)
+  return async (query, { limit, lang, period, domain, ...opts } = {}) => {
+    const url = buildUrl(query, { limit, lang, period, domain })
+    return fetchPage(url, { ...ctxOpts, ...opts }, 0, query)
   }
 }
 

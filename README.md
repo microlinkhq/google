@@ -94,22 +94,10 @@ Maximum number of results to return per page.
 
 Type: `string`
 
-Country perspective for ranking results ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code, e.g. `'us'`, `'de'`, `'jp'`).
+Country code for localizing results ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), e.g. `'us'`, `'de'`, `'jp'`).
 
 ```js
 const page = await google('recetas de pasta', { lang: 'es' })
-```
-
-##### device
-
-Type: `string`<br>
-Values: `'desktop'`, `'mobile'`
-Default: `'desktop'`
-
-Device type for SERP layout. Affects how Google renders and ranks results.
-
-```js
-const page = await google('best restaurants', { device: 'mobile' })
 ```
 
 ##### period

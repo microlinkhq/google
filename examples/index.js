@@ -1,7 +1,8 @@
 'use strict'
 
 const google = require('@microlink/google')({
-  endpoint: 'http://localhost:3000'
+  endpoint: 'http://localhost:3000/'
+  // apiKey: process.env.MICROLINK_API_KEY
 })
 
 const run = async () => {
@@ -9,9 +10,7 @@ const run = async () => {
     lang: 'en'
   })
 
-  console.log('results', page.results)
-
-  // console.log('html', await page.results[0].html())
+  console.log('results', page)
 }
 run().catch(err => {
   console.error(err)

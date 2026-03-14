@@ -15,11 +15,6 @@ test('sets pathname from buildPath', t => {
   t.is(url.pathname, '/hello+world/10/en')
 })
 
-test('sets device param', t => {
-  const url = buildUrl('q', { device: 'desktop' })
-  t.is(url.searchParams.get('device'), 'desktop')
-})
-
 test('sets period param', t => {
   const url = buildUrl('q', { period: 'last_year' })
   t.is(url.searchParams.get('period'), 'last_year')
@@ -32,7 +27,6 @@ test('sets domain param', t => {
 
 test('omits falsy params', t => {
   const url = buildUrl('q')
-  t.is(url.searchParams.get('device'), null)
   t.is(url.searchParams.get('period'), null)
   t.is(url.searchParams.get('domain'), null)
 })
@@ -41,12 +35,10 @@ test('combines all options', t => {
   const url = buildUrl('q', {
     limit: 5,
     lang: 'fr',
-    device: 'mobile',
     period: 'last_month',
     domain: 'site.io'
   })
   t.is(url.pathname, '/q/5/fr')
-  t.is(url.searchParams.get('device'), 'mobile')
   t.is(url.searchParams.get('period'), 'last_month')
   t.is(url.searchParams.get('domain'), 'site.io')
 })
