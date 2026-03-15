@@ -22,7 +22,7 @@ test('skips undefined limit', t => {
   t.is(buildPath('query', undefined, 'es'), 'query/es')
 })
 
-test('skips undefined lang', t => {
+test('skips undefined location', t => {
   t.is(buildPath('query', 5), 'query/5')
 })
 

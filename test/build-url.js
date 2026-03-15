@@ -11,8 +11,18 @@ test('returns URL with correct domain', t => {
 })
 
 test('sets pathname from buildPath', t => {
-  const url = buildUrl('hello world', { limit: 10, lang: 'en' })
+  const url = buildUrl('hello world', { limit: 10, location: 'en' })
   t.is(url.pathname, '/hello+world/10/en')
+})
+
+test('sets type param', t => {
+  const url = buildUrl('q', { type: 'news' })
+  t.is(url.searchParams.get('type'), 'news')
+})
+
+test('omits type when not provided', t => {
+  const url = buildUrl('q')
+  t.is(url.searchParams.get('type'), null)
 })
 
 test('sets period param', t => {
@@ -20,25 +30,20 @@ test('sets period param', t => {
   t.is(url.searchParams.get('period'), 'last_year')
 })
 
-test('sets domain param', t => {
-  const url = buildUrl('q', { domain: 'example.com' })
-  t.is(url.searchParams.get('domain'), 'example.com')
-})
-
 test('omits falsy params', t => {
   const url = buildUrl('q')
+  t.is(url.searchParams.get('type'), null)
   t.is(url.searchParams.get('period'), null)
-  t.is(url.searchParams.get('domain'), null)
 })
 
 test('combines all options', t => {
   const url = buildUrl('q', {
     limit: 5,
-    lang: 'fr',
-    period: 'last_month',
-    domain: 'site.io'
+    location: 'fr',
+    type: 'images',
+    period: 'last_month'
   })
   t.is(url.pathname, '/q/5/fr')
+  t.is(url.searchParams.get('type'), 'images')
   t.is(url.searchParams.get('period'), 'last_month')
-  t.is(url.searchParams.get('domain'), 'site.io')
 })

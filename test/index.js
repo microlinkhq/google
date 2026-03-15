@@ -113,7 +113,7 @@ test('next() preserves all URL params', async t => {
   const calls = []
   const google = createModule(mqlStub(calls))({})
 
-  const page1 = await google('test', { period: 'week', lang: 'fr', limit: 5 })
+  const page1 = await google('test', { period: 'week', location: 'fr', limit: 5 })
   await page1.next()
 
   const url = new URL(calls[1].url)
@@ -131,4 +131,68 @@ test('chained next() accumulates offset', async t => {
 
   const url = new URL(calls[2].url)
   t.is(url.searchParams.get('start'), '4')
+})
+
+test('type option sets type query param', async t => {
+  const calls = []
+  const google = createModule(mqlStub(calls))({})
+
+  await google('test', { type: 'news' })
+
+  const url = new URL(calls[0].url)
+  t.is(url.searchParams.get('type'), 'news')
+})
+
+test('results with url field get html()', async t => {
+  const calls = []
+  const mqlFn = async (url, opts) => {
+    calls.push({ url, opts })
+    if (opts && opts.data) {
+      return { data: { content: '<div>news</div>' } }
+    }
+    return {
+      data: {
+        results: [
+          { title: 'News', url: 'https://example.com/news', description: 'text' }
+        ]
+      }
+    }
+  }
+  const google = createModule(mqlFn)({})
+
+  const page = await google('test', { type: 'news' })
+  const html = await page.results[0].html()
+
+  t.is(html, '<div>news</div>')
+  t.is(calls[1].url, 'https://example.com/news')
+})
+
+test('results without link skip html()', async t => {
+  const mqlFn = async () => ({
+    data: {
+      results: [{ value: 'suggestion' }]
+    }
+  })
+  const google = createModule(mqlFn)({})
+
+  const page = await google('test', { type: 'autocomplete' })
+
+  t.is(page.results[0].value, 'suggestion')
+  t.is(page.results[0].html, undefined)
+})
+
+test('extra data fields are forwarded to page', async t => {
+  const mqlFn = async () => ({
+    data: {
+      results: [{ url: 'https://example.com', title: 'Test' }],
+      knowledgeGraph: { title: 'Test', type: 'Thing' },
+      peopleAlsoAsk: [{ question: 'What?' }]
+    }
+  })
+  const google = createModule(mqlFn)({})
+
+  const page = await google('test')
+
+  t.deepEqual(page.knowledgeGraph, { title: 'Test', type: 'Thing' })
+  t.deepEqual(page.peopleAlsoAsk, [{ question: 'What?' }])
 })

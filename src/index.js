@@ -4,24 +4,27 @@ const mql = require('@microlink/mql')
 
 const DOMAIN = 'microlink.google'
 
-const buildPath = (query, limit, lang) =>
-  [encodeURIComponent(query).replace(/%20/g, '+'), limit, lang]
+const buildPath = (query, limit, location) =>
+  [encodeURIComponent(query).replace(/%20/g, '+'), limit, location]
     .filter(v => v !== undefined)
     .join('/')
 
-const buildUrl = (query, { limit, lang, period, domain } = {}) => {
-  const url = new URL(`https://${DOMAIN}/${buildPath(query, limit, lang)}`)
+const buildUrl = (query, { limit, location, type, period } = {}) => {
+  const url = new URL(`https://${DOMAIN}/${buildPath(query, limit, location)}`)
+  if (type) url.searchParams.set('type', type)
   if (period) url.searchParams.set('period', period)
-  if (domain) url.searchParams.set('domain', domain)
   return url
 }
+
+const resultUrl = result => result.url
 
 const fetchPage = async (url, mqlOpts, offset, query) => {
   url.searchParams.set('start', String(offset))
   const { data } = await mql(url.toString(), mqlOpts)
-  const { results } = data
+  const { results, ...extra } = data
 
   return {
+    ...extra,
     html: async () => {
       const { data } = await mql(
         `https://www.google.com/search?q=${encodeURIComponent(query)}`,
@@ -32,28 +35,39 @@ const fetchPage = async (url, mqlOpts, offset, query) => {
       )
       return data.content
     },
-    results: results.map(result => ({
-      ...result,
-      html: async () => {
-        const { data } = await mql(result.url, {
-          ...mqlOpts,
-          data: { content: { attr: 'html' } }
+    results: results.map(result => {
+      const url = resultUrl(result)
+      return {
+        ...result,
+        ...(url && {
+          html: async () => {
+            const { data } = await mql(url, {
+              ...mqlOpts,
+              data: { content: { attr: 'html' } }
+            })
+            return data.content
+          }
         })
-        return data.content
       }
-    })),
+    }),
     next: () =>
-      fetchPage(new URL(url.toString()), mqlOpts, offset + results.length, query)
+      fetchPage(
+        new URL(url.toString()),
+        mqlOpts,
+        offset + results.length,
+        query
+      )
   }
 }
 
-module.exports = ctxOpts => {
-  return async (query, { limit, lang, period, domain, ...opts } = {}) => {
-    const url = buildUrl(query, { limit, lang, period, domain })
+const createGoogleClient = ctxOpts => {
+  return async (query, { limit, location, type, period, ...opts } = {}) => {
+    const url = buildUrl(query, { limit, location, type, period })
     return fetchPage(url, { ...ctxOpts, ...opts }, 0, query)
   }
 }
 
+module.exports = createGoogleClient
 module.exports.buildPath = buildPath
 module.exports.buildUrl = buildUrl
 module.exports.DOMAIN = DOMAIN

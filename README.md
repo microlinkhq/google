@@ -4,7 +4,30 @@
 [![Coverage Status](https://img.shields.io/coveralls/microlinkhq/microlink-google.svg?style=flat-square)](https://coveralls.io/github/microlinkhq/microlink-google)
 [![NPM Status](https://img.shields.io/npm/dm/@microlink/google.svg?style=flat-square)](https://www.npmjs.org/package/@microlink/google)
 
-> Google search results via [Microlink API](https://microlink.io).
+> Turn Google into a structured API.
+> Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete — and get normalized data ready for code.
+
+## Highlights
+
+- **10 Google verticals in one API**
+  Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete.
+
+- **Normalized data**
+  Dates → ISO 8601
+  Prices → `{ symbol, amount }`
+  Ratings → `{ score, total, reviews }`
+
+- **Lazy HTML fetching**
+  Any result with a `url` exposes `.html()` to fetch the page HTML on demand.
+
+- **Built-in pagination**
+  Just call `.next()` to fetch the next page.
+
+- **Fast**
+  ~1 second response time per request with full parallelization support.
+
+- **Full TypeScript support**
+  Type-specific inference out of the box.
 
 ## Install
 
@@ -12,140 +35,246 @@
 npm install @microlink/google
 ```
 
-## Usage
+## Quick start
 
-Create a client by passing your configuration, then call it with a search query:
+### Your first query
+
+Initialize `@microlink/google`. The only prerequisite is a [Microlink API key](https://microlink.io/#pricing):
 
 ```js
 const google = require('@microlink/google')({
-  apiKey: 'YOUR_API_KEY',
+  apiKey: process.env.MICROLINK_API_KEY
 })
+```
 
+Make your first query:
+
+```js
 const page = await google('Lotus Elise S2')
 
-for (const result of page.results) {
-  console.log(result.title)       // "Lotus Elise - Wikipedia"
-  console.log(result.url)         // "https://en.wikipedia.org/wiki/Lotus_Elise"
-  console.log(result.description) // "The Lotus Elise is a two-seat, ..."
+console.log(page.results)
+// [
+//   {
+//     title: 'Lotus Elise - Wikipedia',
+//     url: 'https://en.wikipedia.org/wiki/Lotus_Elise',
+//     description: 'The Lotus Elise is a two-seat, rear-wheel-drive...'
+//   }
+// ]
+```
+
+Use [Google search operators](https://ahrefs.com/blog/google-advanced-search-operators/) to refine queries:
+
+```js
+const page = await google('Lotus Elise S2 filetype:pdf')
+```
+
+Localize results using `location` or filter by time with `period`:
+
+```js
+await google('recetas de pasta', {
+  location: 'es',
+  period: 'week'
+})
+```
+
+### Get HTML markup
+
+Any result containing a `url` exposes a lazy `.html()` method:
+
+```js
+const { results } = await google('node.js frameworks')
+
+for (const result of results) {
+  const html = await result.html()
+  console.log(html)
 }
-```
-
-Each result has a lazy `.html()` method that fetches the full page HTML on demand:
-
-```js
-const html = await page.results[0].html()
-```
-
-The SERP page HTML is also available:
-
-```js
-const serpHtml = await page.html()
 ```
 
 ### Pagination
 
-Results are paginated. Call `.next()` to get the next page:
+Pages chain naturally:
 
 ```js
-const firstPage = await google('node.js frameworks')
-const secondPage = await firstPage.next()
-const thirdPage = await secondPage.next()
+const page1 = await google('node.js frameworks')
+const page2 = await page1.next()
+const page3 = await page2.next()
 ```
 
-The offset is calculated automatically from the number of results in each page.
+You can also iterate:
 
-## API
+```js
+let page = await google('node.js frameworks')
 
-### google(query, [options])
+while (page) {
+  for (const result of page.results) {
+    console.log(result.title)
+  }
 
-#### query
+  page = await page.next()
+}
+```
 
-*Required*<br>
+# Google products
+
+| Type           | Product             | Example                                                     |
+| -------------- | ------------------- | ----------------------------------------------------------- |
+| `search`       | Google Search       | `google('Lotus Elise S2')`                                  |
+| `news`         | Google News         | `google('artificial intelligence', { type: 'news' })`       |
+| `images`       | Google Images       | `google('northern lights', { type: 'images' })`             |
+| `videos`       | Google Videos       | `google('cooking tutorial', { type: 'videos' })`            |
+| `places`       | Google Places       | `google('coffee shops denver', { type: 'places' })`         |
+| `maps`         | Google Maps         | `google('apple store new york', { type: 'maps' })`          |
+| `shopping`     | Google Shopping     | `google('macbook pro', { type: 'shopping' })`               |
+| `scholar`      | Google Scholar      | `google('transformer architecture', { type: 'scholar' })`   |
+| `patents`      | Google Patents      | `google('touchscreen gestures apple', { type: 'patents' })` |
+| `autocomplete` | Google Autocomplete | `google('how to', { type: 'autocomplete' })`                |
+
+---
+
+## Google Search
+
+Web results with knowledge graph, related questions, and related searches.
+
+```js
+const page = await google('Lotus Elise S2')
+
+page.results[0]
+
+page.knowledgeGraph
+page.peopleAlsoAsk
+page.relatedSearches
+```
+
+## Google News
+
+Recent articles with publisher, date, and thumbnail.
+
+```js
+const page = await google('artificial intelligence', { type: 'news' })
+```
+
+## Google Images
+
+Full-resolution image URLs with dimensions.
+
+```js
+const page = await google('northern lights', { type: 'images' })
+```
+
+## Google Videos
+
+Video metadata with duration in milliseconds.
+
+```js
+const page = await google('cooking tutorial', { type: 'videos' })
+```
+
+## Google Places
+
+Local business listings with coordinates and contact info.
+
+```js
+const page = await google('coffee shops denver', { type: 'places' })
+```
+
+## Google Maps
+
+Detailed place data with ratings, hours, and pricing.
+
+```js
+const page = await google('apple store new york', { type: 'maps' })
+```
+
+## Google Shopping
+
+Product listings with parsed prices and structured ratings.
+
+```js
+const page = await google('macbook pro', { type: 'shopping' })
+```
+
+## Google Scholar
+
+Academic papers with citation counts and PDF links.
+
+```js
+const page = await google('transformer architecture', { type: 'scholar' })
+```
+
+## Google Patents
+
+Patent filings with ISO 8601 dates and metadata.
+
+```js
+const page = await google('touchscreen gestures apple', { type: 'patents' })
+```
+
+## Google Autocomplete
+
+Search suggestions as you type.
+
+```js
+const page = await google('how to', { type: 'autocomplete' })
+```
+
+# API
+
+## google(query, options?)
+
+### query
+
+**Required**
 Type: `string`
 
-The search query. Spaces are supported naturally. You can use [Google search operators](https://support.google.com/websearch/answer/2466433) for advanced filtering:
+The search query. Supports [Google search operators](https://support.google.com/websearch/answer/2466433).
 
 ```js
-// Only PDF files
-const page = await google('annual report filetype:pdf')
-
-// Results from a specific site
-const page = await google('security updates site:github.com')
-
-// Exclude a site
-const page = await google('node.js tutorials -site:w3schools.com')
-
-// Exact phrase
-const page = await google('"machine learning" site:arxiv.org')
-
-// Combine operators
-const page = await google('site:reddit.com intitle:best "mechanical keyboard"')
+await google('annual report filetype:pdf')
+await google('security updates site:github.com')
+await google('"machine learning" site:arxiv.org')
 ```
 
-#### options
+### options
 
-##### limit
-
-Type: `number`
-
-Maximum number of results to return per page.
-
-##### lang
-
-Type: `string`
-
-Country code for localizing results ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2), e.g. `'us'`, `'de'`, `'jp'`).
-
-```js
-const page = await google('recetas de pasta', { lang: 'es' })
-```
-
-##### period
+#### type
 
 Type: `string`<br>
-Values: `'hour'`, `'day'`, `'week'`, `'month'`, `'year'`
+Default: `'search'`<br>
+Values: `'search'` | `'news'` | `'images'` | `'videos'` | `'places'` | `'maps'` | `'shopping'` | `'scholar'` | `'patents'` | `'autocomplete'`
 
-Time-based filter for results.
+Selects which Google product to query.
 
 ```js
-const page = await google('tech news', { period: 'week' })
+await google('artificial intelligence', { type: 'news' })
 ```
 
-##### domain
+#### location
 
 Type: `string`<br>
-Default: `'google.com'`
+Default: `'us'`<br>
+Values: [`Location`](https://github.com/microlinkhq/google/blob/master/src/index.d.ts#L28)
 
-Regional Google domain to query (e.g. `'google.de'`, `'google.co.uk'`, `'google.com.tr'`).
+Controls result geolocation using a country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)). This influences ranking, language, and local intent.
 
 ```js
-const page = await google('restaurants', { domain: 'google.co.uk' })
+await google('recetas de pasta', { location: 'es' })
 ```
 
-### Page object
+#### period
 
-The return value from a search call is a page object with the following properties:
+Type: `string`<br>
+Default: `undefined`<br>
+Values: `hour` | `day` | `week` | `month` | `year`
 
-| Property | Type | Description |
-|---|---|---|
-| `results` | `Array<Result>` | Array of search results |
-| `html()` | `() => Promise<string>` | Returns the raw SERP HTML |
-| `next()` | `() => Promise<Page>` | Fetches the next page of results |
+Limits results to a recent time window. Useful for news monitoring and freshness-sensitive queries.
 
-### Result object
-
-Each result in the `results` array has:
-
-| Property | Type | Description |
-|---|---|---|
-| `title` | `string` | Page title |
-| `url` | `string` | Direct URL to the page |
-| `description` | `string` | Result snippet text |
-| `html()` | `() => Promise<string>` | Fetches the full HTML of this result's URL via Microlink |
+```js
+await google('tech news', { period: 'week' })
+```
 
 ## License
 
-**@microlink/google** © [microlink.io](https://microlink.io), released under the [MIT](https://github.com/microlinkhq/microlink-google/blob/master/LICENSE.md) License.<br>
-Authored and maintained by [microlink.io](https://microlink.io) with help from [contributors](https://github.com/microlinkhq/microlink-google/contributors).
+**@microlink/google** © [Microlink](https://microlink.io), released under the [MIT](https://github.com/microlinkhq/google/blob/master/LICENSE.md) License.<br>
+Authored and maintained by [Kiko Beats](https://kikobeats.com) with help from [contributors](https://github.com/microlinkhq/google/contributors).
 
-> [microlink.io](https://microlink.io) · GitHub [microlink.io](https://github.com/microlinkhq) · Twitter [@microlinkhq](https://twitter.com/microlinkhq)
+> [microlink.io](https://microlink.io) · GitHub [microlinkhq](https://github.com/microlinkhq) · X [@microlinkhq](https://x.com/microlinkhq)
