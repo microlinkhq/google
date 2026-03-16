@@ -1,0 +1,512 @@
+:root {
+  --primary-color: #202124;
+  --secondary-color: #4f535e; /* https://uicolors.app/generate/202124 */
+  --accent-color: #4285F4;
+  --accent-hover: #174ea6;
+  --selection-color: #d2e3fc;
+  --bg-color: #fff;
+  --sidebar-bg: #fff;
+  --border-color: #dadce0;
+  --heading-font: 'Google Sans', 'Roboto', sans-serif;
+  --body-font: 'Roboto', sans-serif;
+  --code-font: 'Roboto Mono', monospace;
+  --codebox-bg: #fff;
+  --codebox-color: #f44285;
+}
+
+::selection {
+  background: var(--selection-color);
+}
+
+::-moz-selection {
+  background: var(--selection-color);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-text-size-adjust: none;
+  -webkit-touch-callout: none;
+  box-sizing: border-box;
+}
+
+/* Hero banner */
+.hero-banner {
+  max-width: 100%;
+  height: auto;
+  width: 800px;
+}
+
+/* Hide badges */
+.markdown-section > p:first-of-type {
+  display: none;
+}
+
+/* Markdown table styling */
+.markdown-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 14px;
+}
+
+.markdown-section th,
+.markdown-section td {
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.markdown-section th {
+  color: var(--secondary-color);
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.markdown-section tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.markdown-section tbody tr:hover {
+  background-color: var(--sidebar-bg);
+}
+
+body,
+html {
+  height: 100%;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: var(--primary-color);
+  font-family: var(--body-font);
+  font-size: 16px;
+  letter-spacing: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* github corner */
+@keyframes b {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+
+a.github-corner {
+  z-index: 1;
+}
+
+.github-corner svg {
+  border-bottom: 0;
+  position: fixed;
+  right: 0;
+  text-decoration: none;
+  top: 0;
+  z-index: 1;
+  color: white;
+  fill: var(--codebox-color);
+  height: 80px;
+  width: 80px;
+}
+
+.github-corner:hover svg .octo-arm {
+  opacity: 1;
+  animation: b 560ms ease-in-out;
+}
+
+main {
+  display: block;
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  z-index: 0;
+}
+
+.sidebar {
+  font-family: var(--body-font);
+  padding: 24px 0;
+  width: 300px;
+  transition: transform 0.25s ease-out;
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+}
+
+.sidebar .sidebar-nav {
+  line-height: 1.8em;
+  padding: 0 24px 40px;
+}
+
+.sidebar li {
+  margin: 4px 0;
+}
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar ul ul {
+  margin-left: 16px;
+}
+
+.sidebar ul,
+.sidebar ul li {
+  list-style: none;
+}
+
+.sidebar ul li a {
+  display: block;
+  color: var(--secondary-color);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar ul li a:hover {
+  background-color: #e8eaed;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.sidebar ul li.active > a {
+  background-color: #e8f0fe;
+  color: var(--accent-color);
+  font-weight: 500;
+  border-right: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 53%, 0.4);
+}
+
+.sidebar:hover::-webkit-scrollbar-track {
+  background: hsla(0, 0%, 53%, 0.1);
+}
+
+.sidebar-toggle {
+  display: none;
+}
+
+.content {
+  padding-top: 40px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 300px;
+  position: absolute;
+  transition: left 0.25s ease;
+}
+
+.markdown-section {
+  margin: 0 auto;
+  max-width: 800px;
+  padding: 30px 40px 60px;
+  position: relative;
+}
+
+.markdown-section > * {
+  box-sizing: border-box;
+  font-size: inherit;
+}
+
+.markdown-section > :first-child {
+  margin-top: 0 !important;
+}
+
+@media print {
+  .github-corner,
+  .sidebar,
+  .sidebar-toggle {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: -300px;
+  }
+
+  .github-corner svg {
+    height: 62px !important;
+    width: 62px !important;
+  }
+
+  .sidebar-toggle {
+    cursor: pointer;
+    display: inherit;
+    border: 0;
+    outline: none;
+    padding: 0 10px;
+    left: 6px;
+    transition: opacity 0.3s;
+    z-index: 4;
+    position: fixed;
+    top: 0;
+    height: 62px;
+    width: 100%;
+    background: var(--bg-color);
+  }
+
+  .sidebar-toggle span {
+    background-color: var(--primary-color);
+    display: block;
+    margin-bottom: 5px;
+    width: 24px;
+    height: 3px;
+  }
+
+  body.sidebar-toggle {
+    display: none;
+  }
+
+  body.close .sidebar,
+  body.close .content {
+    transform: translateX(280px);
+  }
+
+  body.close .sidebar-toggle {
+    background: var(--bg-color);
+    transition: background-color 0.3s;
+    width: 284px;
+  }
+
+  main {
+    height: auto;
+    overflow-x: hidden;
+  }
+
+  .content {
+    left: 0;
+    max-width: 100vw;
+    position: static;
+    padding-top: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+}
+
+body {
+  background-color: var(--bg-color);
+}
+
+.markdown-section :is(h1, h2, h3, h4, h5) {
+  font-family: var(--heading-font);
+  color: var(--primary-color);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.markdown-section :is(h1, h2, h3, h4, h5) a {
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.markdown-section :is(h1, h2, h3, h4, h5) a:hover::after {
+  content: '';
+  position: relative;
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  top: -2px;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231a73e8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M15%207h3a5%205%200%200%201%205%205%205%205%200%200%201-5%205h-3m-6%200H6a5%205%200%200%201-5-5%205%205%200%200%201%205-5h3%22%3E%3C%2Fpath%3E%3Cline%20x1%3D%228%22%20y1%3D%2212%22%20x2%3D%2216%22%20y2%3D%2212%22%3E%3C%2Fline%3E%3C%2Fsvg%3E');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+}
+
+.markdown-section a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.markdown-section :is(li, p) a {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+.markdown-section :is(li, p) a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+  border: none;
+}
+
+.markdown-section p a[href^="http"]::after,
+.markdown-section p a[href^="https://"]::after,
+.markdown-section li a[href^="http"]::after,
+.markdown-section li a[href^="https://"]::after {
+  content: '';
+  width: 11px;
+  height: 11px;
+  margin-left: 3px;
+  top: 0;
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%231a73e8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cline%20x1%3D%227%22%20y1%3D%2217%22%20x2%3D%2217%22%20y2%3D%227%22%3E%3C%2Fline%3E%3Cpolyline%20points%3D%227%207%2017%207%2017%2017%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+}
+
+.markdown-section p a[href^="http"]:hover::after,
+.markdown-section li a[href^="http"]:hover::after,
+.markdown-section p a[href^="https://"]:hover::after,
+.markdown-section li a[href^="https://"]:hover::after {
+  background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23174ea6%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cline%20x1%3D%225%22%20y1%3D%2212%22%20x2%3D%2219%22%20y2%3D%2212%22%3E%3C%2Fline%3E%3Cpolyline%20points%3D%2212%205%2019%2012%2012%2019%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
+}
+
+.markdown-section h1 {
+  font-size: 2.5rem;
+  margin: 2.5rem 0 1rem;
+}
+
+.markdown-section h2 {
+  font-size: 1.75rem;
+  margin: 2.5rem 0 0.75rem;
+  padding-bottom: 8px;
+}
+
+.markdown-section h3 {
+  font-size: 1.375rem;
+  margin: 2rem 0 0.75rem;
+}
+
+.markdown-section h4 {
+  font-size: 1.125rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.markdown-section h5 {
+  font-size: 1rem;
+  color: var(--secondary-color);
+}
+
+.markdown-section p {
+  margin: 1rem 0 0 0;
+  color: var(--primary-color);
+}
+
+.markdown-section ul {
+  margin: 0.75rem 0;
+}
+
+.markdown-section :is(p, ul) {
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.markdown-section ul {
+  padding-left: 24px;
+}
+
+.markdown-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-section ul li:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-section :is(li, p) code {
+  background: var(--codebox-bg);
+  border-radius: 4px;
+  border: none;
+  color: var(--codebox-color);
+  font-family: var(--code-font);
+  padding: 2px 3px;
+}
+
+/* .markdown-section :is(li, p) code::before,
+.markdown-section :is(li, p) code::after {
+  content: '`';
+} */
+
+.app-name {
+  display: flex;
+  justify-content: center;
+  padding: 24px 24px 16px;
+}
+
+.app-name-link {
+  font-family: var(--heading-font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.app-name-link img {
+  width: 64px;
+}
+
+/* Code blocks */
+pre {
+  background: var(--codebox-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 1.5em 0;
+  overflow-x: auto;
+  font-family: var(--code-font);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--codebox-color);
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Blockquote — Google style */
+.markdown-section blockquote {
+  border-left: 3px solid var(--accent-color);
+  color: var(--secondary-color);
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+}
+
+/* Horizontal rule */
+.markdown-section hr {
+  display: none;
+}

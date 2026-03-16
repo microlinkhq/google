@@ -1,33 +1,40 @@
-# @microlink/google
+<div align="center">
+  <img src="/static/banner.jpg" class="hero-banner">
+  <br>
+  <br>
+  <p>Turn Google results into structured, code-ready data. Powered by <a href="https://microlink.io" target="_blank" rel='noopener noreferrer'>microlink.io</a></p>
+  <br>
+</div>
 
-![Last version](https://img.shields.io/github/tag/microlinkhq/microlink-google.svg?style=flat-square)
-[![Coverage Status](https://img.shields.io/coveralls/microlinkhq/microlink-google.svg?style=flat-square)](https://coveralls.io/github/microlinkhq/microlink-google)
+![Last version](https://img.shields.io/github/tag/microlinkhq/google.svg?style=flat-square)
+[![Coverage Status](https://img.shields.io/coveralls/microlinkhq/google.svg?style=flat-square)](https://coveralls.io/github/microlinkhq/google)
 [![NPM Status](https://img.shields.io/npm/dm/@microlink/google.svg?style=flat-square)](https://www.npmjs.org/package/@microlink/google)
-
-> Turn Google into a structured API.
-> Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete — and get normalized data ready for code.
 
 ## Highlights
 
-- **10 Google verticals in one API**
-  Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete.
+- **10 Google verticals in one API**<br>
+  <img src="https://www.google.com/s2/favicons?domain=google.com&sz=32" height="14"> [Google Search](#google-search)<br>
+  <img src="https://www.google.com/s2/favicons?domain=news.google.com&sz=32" height="14"> [Google News](#google-news)<br>
+  <img src="https://www.google.com/s2/favicons?domain=google.com&sz=32" height="14"> [Google Images](#google-images)<br>
+  <img src="https://www.google.com/s2/favicons?domain=youtube.com&sz=32" height="14"> [Google Videos](#google-videos)<br>
+  <img src="https://www.google.com/s2/favicons?domain=maps.google.com&sz=32" height="14"> [Google Places](#google-places)<br>
+  <img src="https://www.google.com/s2/favicons?domain=maps.google.com&sz=32" height="14"> [Google Maps](#google-maps)<br>
+  <img src="https://www.google.com/s2/favicons?domain=shopping.google.com&sz=32" height="14"> [Google Shopping](#google-shopping)<br>
+  <img src="https://www.google.com/s2/favicons?domain=scholar.google.com&sz=32" height="14"> [Google Scholar](#google-scholar)<br>
+  <img src="https://www.google.com/s2/favicons?domain=google.com&sz=32" height="14"> [Google Patents](#google-patents)<br>
+  <img src="https://www.google.com/s2/favicons?domain=google.com&sz=32" height="14"> [Google Autocomplete](#google-autocomplete)<br>
 
-- **Normalized data**
-  Dates → ISO 8601
-  Prices → `{ symbol, amount }`
-  Ratings → `{ score, total, reviews }`
+- **Normalized data**<br>
+  Prices `{ symbol, amount }`<br>
+  Ratings `{ score, total, reviews }`<br>
+  Coordinates  `{ latitude, longitude }`<br>
+  Images  `{ url, width, height }`<br>
 
-- **Lazy HTML fetching**
-  Any result with a `url` exposes `.html()` to fetch the page HTML on demand.
-
-- **Built-in pagination**
-  Just call `.next()` to fetch the next page.
-
-- **Fast**
-  ~1 second response time per request with full parallelization support.
-
-- **Full TypeScript support**
-  Type-specific inference out of the box.
+- **Built for developers and LLMs**<br>
+  Any result with a `url` exposes `.html()` to fetch the page HTML on demand.<br>
+  Just call `.next()` to fetch the next page.<br>
+  Parallelized requests (~1s latency).<br>
+  Type-specific inference included.<br>
 
 ## Install
 
@@ -39,7 +46,7 @@ npm install @microlink/google
 
 ### Your first query
 
-Initialize `@microlink/google`. The only prerequisite is a [Microlink API key](https://microlink.io/#pricing):
+The only prerequisite to initialize `@microlink/google` is to have [Microlink API key](https://microlink.io/#pricing):
 
 ```js
 const google = require('@microlink/google')({
@@ -128,8 +135,6 @@ while (page) {
 | `scholar`      | Google Scholar      | `google('transformer architecture', { type: 'scholar' })`   |
 | `patents`      | Google Patents      | `google('touchscreen gestures apple', { type: 'patents' })` |
 | `autocomplete` | Google Autocomplete | `google('how to', { type: 'autocomplete' })`                |
-
----
 
 ## Google Search
 
@@ -252,7 +257,7 @@ await google('artificial intelligence', { type: 'news' })
 
 Type: `string`<br>
 Default: `'us'`<br>
-Values: [`Location`](https://github.com/microlinkhq/google/blob/master/src/index.d.ts#L28)
+Values: [Location](https://github.com/microlinkhq/google/blob/master/src/index.d.ts#L28)
 
 Controls result geolocation using a country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)). This influences ranking, language, and local intent.
 
@@ -264,7 +269,7 @@ await google('recetas de pasta', { location: 'es' })
 
 Type: `string`<br>
 Default: `undefined`<br>
-Values: `hour` | `day` | `week` | `month` | `year`
+Values: `'hour'` | `'day'` | `'week'` | `'month'` | `'year'`
 
 Limits results to a recent time window. Useful for news monitoring and freshness-sensitive queries.
 

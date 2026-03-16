@@ -1,7 +1,7 @@
 {
   "name": "@microlink/google",
   "description": "Structured Google data from 10 verticals through Microlink API",
-  "homepage": "https://github.com/microlinkhq/microlink-google",
+  "homepage": "https://github.com/microlinkhq/google",
   "version": "0.1.0",
   "exports": {
     "types": "./src/index.d.ts",
@@ -16,10 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/microlinkhq/microlink-google.git"
+    "url": "git+https://github.com/microlinkhq/google.git"
   },
   "bugs": {
-    "url": "https://github.com/microlinkhq/microlink-google/issues"
+    "url": "https://github.com/microlinkhq/google/issues"
   },
   "keywords": [
     "google",
@@ -37,16 +37,25 @@
     "@commitlint/config-conventional": "latest",
     "@ksmithut/prettier-standard": "latest",
     "ava": "latest",
+    "browser-sync": "latest",
     "c8": "latest",
+    "cssnano": "latest",
+    "cssnano-preset-advanced": "latest",
     "finepack": "latest",
     "git-authors-cli": "latest",
     "github-generate-release": "latest",
+    "gulp": "latest",
+    "gulp-concat": "latest",
+    "gulp-postcss": "latest",
+    "gulp-uglify": "latest",
     "nano-staged": "latest",
+    "postcss-focus": "latest",
     "simple-git-hooks": "latest",
     "standard": "latest",
     "standard-markdown": "latest",
     "standard-version": "latest",
     "proxyquire": "latest",
+    "tinyrun": "latest",
     "tinyspawn": "latest"
   },
   "engines": {
@@ -65,6 +74,10 @@
     "release": "standard-version -a",
     "release:github": "github-generate-release",
     "release:tags": "git push --follow-tags origin HEAD:master",
+    "dev": "tinyrun \"pnpm dev:src\" \"pnpm dev:server\"",
+    "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
+    "dev:src": "gulp",
+    "build": "gulp build",
     "test": "c8 ava"
   },
   "license": "MIT",

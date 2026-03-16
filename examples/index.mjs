@@ -7,9 +7,12 @@ const google = createGoogleClient({
 
 const run = async () => {
   const page = await google('lotus elise filetype:pdf', {
-    // location: 'us',
-    // type: 'news'
+    type: 'search'
   })
+
+  page.results.forEach(result => {
+    console.log(result.url)
+  }
 
   console.log(page)
   console.log(JSON.stringify(page, null, 2))

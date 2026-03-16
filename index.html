@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+  <!-- Search Engine -->
+  <meta name="description" content="Turn Google into a structured API. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete." />
+  <meta name="image" content="https://search.microlink.io/static/banner.jpg" />
+  <link rel="canonical" href="https://google.microlink.io" />
+  <title>@microlink/google — Turn Google into a structured API</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://microlink.io/#organization",
+        "name": "Microlink",
+        "url": "https://microlink.io",
+        "logo": "https://cdn.microlink.io/logo/favicon.svg",
+        "sameAs": [
+          "https://github.com/microlinkhq",
+          "https://x.com/microlinkhq"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://google.microlink.io/#website",
+        "name": "@microlink/google",
+        "url": "https://google.microlink.io",
+        "description": "Turn Google results into structured, code-ready data. Powered by Microlink.",
+        "publisher": { "@id": "https://microlink.io/#organization" }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="@microlink/google" />
+  <meta name="twitter:description" content="Turn Google into a structured API. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete." />
+  <meta name="twitter:image" content="https://search.microlink.io/static/banner.jpg" />
+
+  <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+  <meta property="og:title" content="@microlink/google" />
+  <meta property="og:description" content="Turn Google into a structured API. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete." />
+  <meta property="og:image" content="https://search.microlink.io/static/banner.jpg" />
+  <meta property="og:url" content="https://google.microlink.io" />
+  <meta property="og:site_name" content="google.microlink.io" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn.microlink.io/logo/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="https://cdn.microlink.io/logo/favicon.svg">
+  <link rel="shortcut icon" href="https://cdn.microlink.io/logo/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.microlink.io/logo/apple-touch-icon.png">
+
+  <!-- Stylesheet -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.min.css" />
+  <link
+      href="https://unpkg.com/automad-prism-themes/dist/prism-serendipity-morning.css"
+      rel="stylesheet"
+    />
+</head>
+
+<body>
+  <div id="app"></div>
+  <noscript>
+    <h1>@microlink/google</h1>
+    <p>Turn Google results into structured, code-ready data. Powered by <a href="https://microlink.io">Microlink</a>.</p>
+    <h2>Highlights</h2>
+    <ul>
+      <li><strong>10 Google verticals in one API</strong> — Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete.</li>
+      <li><strong>Normalized data</strong> — Prices, ratings, coordinates, and images returned in consistent structures.</li>
+      <li><strong>Built for developers and LLMs</strong> — Lazy <code>.html()</code>, <code>.next()</code> pagination, parallelized requests (~1s latency).</li>
+    </ul>
+    <h2>Install</h2>
+    <pre><code>npm install @microlink/google</code></pre>
+    <p><a href="https://github.com/microlinkhq/google">View on GitHub</a></p>
+  </noscript>
+</body>
+<script src="/static/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+
+</html>
