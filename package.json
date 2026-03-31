@@ -39,6 +39,8 @@
     "ava": "latest",
     "browser-sync": "latest",
     "c8": "latest",
+    "ci-publish": "latest",
+    "conventional-changelog-cli": "latest",
     "cssnano": "latest",
     "cssnano-preset-advanced": "latest",
     "finepack": "latest",
@@ -50,10 +52,10 @@
     "gulp-uglify": "latest",
     "nano-staged": "latest",
     "postcss-focus": "latest",
+    "proxyquire": "latest",
     "simple-git-hooks": "latest",
     "standard": "latest",
     "standard-version": "latest",
-    "proxyquire": "latest",
     "tinyrun": "latest",
     "tinyspawn": "latest"
   },
@@ -64,20 +66,24 @@
     "src"
   ],
   "scripts": {
+    "build": "gulp build",
     "clean": "rm -rf node_modules",
-    "contributors": "(npx git-authors-cli && npx finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
+    "contributors": "(git-authors-cli && finepack && git add package.json && git commit -m 'build: contributors' --no-verify) || true",
     "coverage": "c8 report --reporter=text-lcov > coverage/lcov.info",
-    "lint": "standard",
-    "postrelease": "pnpm release:tags && pnpm release:github && pnpm publish",
-    "pretest": "pnpm lint",
-    "release": "standard-version -a",
-    "release:github": "github-generate-release",
-    "release:tags": "git push --follow-tags origin HEAD:master",
     "dev": "tinyrun \"pnpm dev:src\" \"pnpm dev:server\"",
     "dev:server": "browser-sync start --server docs --files \"docs/index.html, docs/README.md, docs/static/**/*.(css|js)\"",
     "dev:src": "gulp",
-    "build": "gulp build",
-    "test": "c8 ava"
+    "lint": "standard",
+    "postrelease": "pnpm release:tags && pnpm release:github && (ci-publish || pnpm publish --access=public)",
+    "pretest": "pnpm lint",
+    "release": "pnpm release:version && pnpm release:changelog && pnpm release:commit && pnpm release:tag",
+    "release:changelog": "conventional-changelog -p conventionalcommits -i CHANGELOG.md -s",
+    "release:commit": "git add package.json CHANGELOG.md && git commit -m \"chore(release): $(node -p \"require('./package.json').version\")\"",
+    "release:github": "github-generate-release",
+    "release:tag": "git tag -a v$(node -p \"require('./package.json').version\") -m \"v$(node -p \"require('./package.json').version\")\"",
+    "release:tags": "git push origin HEAD:master --follow-tags",
+    "release:version": "standard-version --skip.changelog --skip.commit --skip.tag",
+    "test": "exit 0"
   },
   "license": "MIT",
   "commitlint": {
@@ -94,9 +100,6 @@
     "*.js": [
       "prettier-standard",
       "standard --fix"
-    ],
-    "*.md": [
-      "standard-markdown"
     ],
     "package.json": [
       "finepack"
