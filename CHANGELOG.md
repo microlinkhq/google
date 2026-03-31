@@ -1,3 +1,4 @@
+## [1.0.0](https://github.com/microlinkhq/google/compare/v0.1.1...v1.0.0) (2026-03-31)
 ## 0.1.1 (2026-03-31)
 # Changelog
 
