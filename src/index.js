@@ -18,6 +18,14 @@ const buildUrl = (query, { limit, location, type, period } = {}) => {
 
 const resultUrl = result => result.url
 
+const fetchDataField = async (url, mqlOpts, field, attr) => {
+  const { data } = await mql(url, {
+    ...mqlOpts,
+    data: { [field]: { attr } }
+  })
+  return data[field]
+}
+
 const fetchPage = async (url, mqlOpts, offset, query) => {
   url.searchParams.set('start', String(offset))
   const { data } = await mql(url.toString(), mqlOpts)
@@ -25,28 +33,27 @@ const fetchPage = async (url, mqlOpts, offset, query) => {
 
   return {
     ...extra,
-    html: async () => {
-      const { data } = await mql(
+    html: () =>
+      fetchDataField(
         `https://www.google.com/search?q=${encodeURIComponent(query)}`,
-        {
-          ...mqlOpts,
-          data: { content: { attr: 'html' } }
-        }
-      )
-      return data.content
-    },
+        mqlOpts,
+        'content',
+        'html'
+      ),
+    markdown: () =>
+      fetchDataField(
+        `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+        mqlOpts,
+        'markdown',
+        'markdown'
+      ),
     results: results.map(result => {
       const url = resultUrl(result)
       return {
         ...result,
         ...(url && {
-          html: async () => {
-            const { data } = await mql(url, {
-              ...mqlOpts,
-              data: { content: { attr: 'html' } }
-            })
-            return data.content
-          }
+          html: () => fetchDataField(url, mqlOpts, 'content', 'html'),
+          markdown: () => fetchDataField(url, mqlOpts, 'markdown', 'markdown')
         })
       }
     }),

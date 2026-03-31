@@ -17,7 +17,7 @@ Key capabilities:
 
 - structured Google Search results
 - Google News, Images, Videos, Shopping, Scholar, Maps, Places, Patents, and Autocomplete support
-- lazy `html()` fetch for full-page markup
+- lazy `html()` and `markdown()` fetch for full-page markup
 - pagination with `next()`
 - type-aware fields such as title, url, description, ratings, coordinates, and image metadata
 
