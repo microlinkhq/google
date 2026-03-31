@@ -10,11 +10,12 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
 
   <!-- Search Engine -->
-  <meta name="description" content="Turn Google into a structured API. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete." />
-  <meta name="image" content="https://search.microlink.io/static/banner.jpg" />
-  <link rel="canonical" href="https://google.microlink.io" />
-  <title>@microlink/google — Turn Google into a structured API</title>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta name="description" content="@microlink/google is a Google Search API for LLMs, AI agents, copilots, and developer tools. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete as structured data." />
+  <meta name="image" content="https://search.microlink.io/static/share.jpg" />
+  <meta name="theme-color" content="#f2efe8" />
+  <link rel="canonical" href="https://search.microlink.io" />
+  <title>@microlink/google — Google Search API for LLMs, agents, and copilots</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -34,11 +35,62 @@
       },
       {
         "@type": "WebSite",
-        "@id": "https://google.microlink.io/#website",
+        "@id": "https://search.microlink.io/#website",
         "name": "@microlink/google",
-        "url": "https://google.microlink.io",
-        "description": "Turn Google results into structured, code-ready data. Powered by Microlink.",
+        "url": "https://search.microlink.io",
+        "description": "Google Search API for LLMs, AI agents, copilots, and developer tools. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete as structured data.",
         "publisher": { "@id": "https://microlink.io/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://search.microlink.io/#software",
+        "name": "@microlink/google",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Node.js",
+        "description": "Node.js package that turns Google Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete into structured API responses for LLMs, AI agents, copilots, and developer tools.",
+        "url": "https://search.microlink.io",
+        "downloadUrl": "https://www.npmjs.com/package/@microlink/google",
+        "codeRepository": "https://github.com/microlinkhq/google",
+        "creator": { "@id": "https://microlink.io/#organization" },
+        "keywords": "google search api,llm tools,ai agents,google news api,google scholar api,google maps api,node.js"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://search.microlink.io/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is this only for LLM apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. It works for any product that needs structured Google data, but it is especially useful for agent workflows, retrieval pipelines, and AI products that benefit from normalized output."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why not scrape Google HTML directly?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Raw Google markup is harder to maintain and harder for LLM tools to consume. @microlink/google returns structured fields so developers can avoid custom SERP parsing."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use it in tool-calling systems?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The interface is simple enough to wrap in tool definitions for agent frameworks, copilots, and orchestration systems."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I paginate and inspect sources deeply?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Use next() for pagination and html() on any result with a url when you need full page markup."
+            }
+          }
+        ]
       }
     ]
   }
@@ -47,14 +99,14 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="@microlink/google" />
-  <meta name="twitter:description" content="Turn Google into a structured API. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete." />
-  <meta name="twitter:image" content="https://search.microlink.io/static/banner.jpg" />
+  <meta name="twitter:description" content="@microlink/google is a Google Search API for LLMs, AI agents, copilots, and developer tools. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete as structured data." />
+  <meta name="twitter:image" content="https://search.microlink.io/static/share.jpg" />
 
   <!-- Open Graph general (Facebook, Pinterest & Google+) -->
   <meta property="og:title" content="@microlink/google" />
-  <meta property="og:description" content="Turn Google into a structured API. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete." />
-  <meta property="og:image" content="https://search.microlink.io/static/banner.jpg" />
-  <meta property="og:url" content="https://google.microlink.io" />
+  <meta property="og:description" content="@microlink/google is a Google Search API for LLMs, AI agents, copilots, and developer tools. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete as structured data." />
+  <meta property="og:image" content="https://search.microlink.io/static/share.jpg" />
+  <meta property="og:url" content="https://search.microlink.io" />
   <meta property="og:site_name" content="google.microlink.io" />
   <meta property="og:type" content="website" />
 
@@ -65,7 +117,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.microlink.io/logo/apple-touch-icon.png">
 
   <!-- Stylesheet -->
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/style.min.css" />
   <link
       href="https://unpkg.com/automad-prism-themes/dist/prism-serendipity-morning.css"
@@ -74,6 +126,7 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <div id="app"></div>
   <noscript>
     <h1>@microlink/google</h1>
