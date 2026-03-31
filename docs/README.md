@@ -484,11 +484,19 @@ Limits results to a recent time window. Useful for news monitoring and freshness
 await google('tech news', { period: 'week' })
 ```
 
+## Disclosure
+
+This library interacts with publicly available Google services and normalizes the resulting data.
+
+It is not affiliated with, endorsed by, or sponsored by Google.
+
+Use of this library must comply with Google’s Terms of Service, applicable laws, and any relevant data usage policies.
+
+Users are responsible for their use of this library and any data obtained through it.
+
 ## License
 
-`@microlink/google` is open source and maintained by Microlink.
-
-**@microlink/google** © [Microlink](https://microlink.io), released under the [MIT](https://github.com/microlinkhq/google/blob/master/LICENSE.md) License.<br>
+**microlink/google** © [Microlink](https://microlink.io), released under the [MIT](https://github.com/microlinkhq/google/blob/master/LICENSE.md) License.<br>
 Authored and maintained by [Kiko Beats](https://kikobeats.com) with help from [contributors](https://github.com/microlinkhq/google/contributors).
 
 > [microlink.io](https://microlink.io) · GitHub [microlinkhq](https://github.com/microlinkhq) · X [@microlinkhq](https://x.com/microlinkhq)
