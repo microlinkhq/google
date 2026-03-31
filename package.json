@@ -74,7 +74,7 @@
     "release:github": "github-generate-release",
     "release:tags": "git push --follow-tags origin HEAD:master",
     "dev": "tinyrun \"pnpm dev:src\" \"pnpm dev:server\"",
-    "dev:server": "browser-sync start --server --files \"index.html, README.md, static/**/*.(css|js)\"",
+    "dev:server": "browser-sync start --server docs --files \"docs/index.html, docs/README.md, docs/static/**/*.(css|js)\"",
     "dev:src": "gulp",
     "build": "gulp build",
     "test": "c8 ava"

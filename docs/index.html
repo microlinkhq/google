@@ -38,8 +38,20 @@
         "@id": "https://search.microlink.io/#website",
         "name": "@microlink/google",
         "url": "https://search.microlink.io",
-        "description": "Google Search API for LLMs, AI agents, copilots, and developer tools. Query Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete as structured data.",
+        "description": "Consume Google as API for agents, copilots, and LLM-powered products.",
+        "inLanguage": "en",
         "publisher": { "@id": "https://microlink.io/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://search.microlink.io/#webpage",
+        "url": "https://search.microlink.io",
+        "name": "@microlink/google — Google Search API for LLMs, agents, and copilots",
+        "description": "Turn Google results into structured, code-ready data.",
+        "isPartOf": { "@id": "https://search.microlink.io/#website" },
+        "about": { "@id": "https://search.microlink.io/#software" },
+        "primaryImageOfPage": "https://search.microlink.io/static/share.jpg",
+        "inLanguage": "en"
       },
       {
         "@type": "SoftwareApplication",
@@ -47,11 +59,17 @@
         "name": "@microlink/google",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "Node.js",
-        "description": "Node.js package that turns Google Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete into structured API responses for LLMs, AI agents, copilots, and developer tools.",
+        "description": "Node.js package that turns Google products such as Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete into structured API responses.",
         "url": "https://search.microlink.io",
         "downloadUrl": "https://www.npmjs.com/package/@microlink/google",
         "codeRepository": "https://github.com/microlinkhq/google",
         "creator": { "@id": "https://microlink.io/#organization" },
+        "softwareRequirements": "Microlink API key",
+        "featureList": [
+          "10 Google verticals in one API: Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete.",
+          "Normalized fields such as title, url, description, price, rating, coordinates, and image metadata.",
+          "Lazy .html() page expansion and .next() pagination."
+        ],
         "keywords": "google search api,llm tools,ai agents,google news api,google scholar api,google maps api,node.js"
       },
       {
@@ -63,7 +81,7 @@
             "name": "Is this only for LLM apps?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. It works for any product that needs structured Google data, but it is especially useful for agent workflows, retrieval pipelines, and AI products that benefit from normalized output."
+              "text": "No. It works for any product that needs structured Google data. But it is especially useful for agent workflows, retrieval pipelines, and AI products that benefit from normalized output."
             }
           },
           {
@@ -71,7 +89,7 @@
             "name": "Why not scrape Google HTML directly?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Raw Google markup is harder to maintain and harder for LLM tools to consume. @microlink/google returns structured fields so developers can avoid custom SERP parsing."
+              "text": "You can, but raw markup is harder to maintain, harder for LLM tools to consume, and usually requires much more custom parsing logic."
             }
           },
           {
@@ -87,7 +105,7 @@
             "name": "Can I paginate and inspect sources deeply?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Use next() for pagination and html() on any result with a url when you need full page markup."
+              "text": "Yes. Use .next() for pagination and .html() on any result with a url when you need full page markup."
             }
           }
         ]

@@ -11,7 +11,7 @@ const src = {
 }
 
 const dist = {
-  path: 'static',
+  path: 'docs/static',
   name: {
     css: 'style',
     js: 'main'
