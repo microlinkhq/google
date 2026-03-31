@@ -4,8 +4,7 @@ const createHeroStats = () => {
   stats.innerHTML = `
     <div class="hero-stat"><strong>10</strong><span>Google verticals</span></div>
     <div class="hero-stat"><strong>~1s</strong><span>Typical latency</span></div>
-    <div class="hero-stat"><strong>HTML</strong><span>Lazy page fetch</span></div>
-    <div class="hero-stat"><strong>∞</strong><span>Pagination ready</span></div>
+    <div class="hero-stat hero-stat--serialization"><strong>HTML/MARKDOWN</strong><span>Output serialization</span></div>
   `
   return stats
 }
@@ -291,7 +290,8 @@ const setupNavigationTracking = section => {
     const sectionId = getCurrentSectionId()
     const firstHeadingTop = scopedHeadings[0].offsetTop
     const nearTopThreshold = Math.max(8, window.innerHeight * 0.03)
-    const isBeforeFirstHeading = window.scrollY + nearTopThreshold < firstHeadingTop
+    const isBeforeFirstHeading =
+      window.scrollY + nearTopThreshold < firstHeadingTop
 
     if (isBeforeFirstHeading) {
       setActiveLink(firstHeadingId)

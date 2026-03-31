@@ -9,6 +9,9 @@ const mqlStub =
   (capturedCalls = []) =>
     async (url, opts) => {
       capturedCalls.push({ url, opts })
+      if (opts && opts.data && opts.data.markdown) {
+        return { data: { markdown: '# page' } }
+      }
       if (opts && opts.data) {
         return { data: { content: '<html>page</html>' } }
       }
@@ -98,6 +101,44 @@ test('result html() fetches content from result URL', async t => {
   t.deepEqual(calls[1].opts.data, { content: { attr: 'html' } })
 })
 
+test('page markdown() fetches Google SERP markdown lazily', async t => {
+  const calls = []
+  const google = createModule(mqlStub(calls))({})
+
+  const page = await google('test query')
+  const markdown = await page.markdown()
+
+  t.is(markdown, '# page')
+  t.is(calls[1].url, 'https://www.google.com/search?q=test%20query')
+  t.deepEqual(calls[1].opts.data, { markdown: { attr: 'markdown' } })
+})
+
+test('result markdown() fetches content from result URL', async t => {
+  const calls = []
+  const mqlFn = async (url, opts) => {
+    calls.push({ url, opts })
+    if (opts && opts.data && opts.data.markdown) {
+      return { data: { markdown: '# article' } }
+    }
+    if (opts && opts.data) {
+      return { data: { content: '<div>article</div>' } }
+    }
+    return {
+      data: {
+        results: [{ url: 'https://example.com/article', title: 'Article' }]
+      }
+    }
+  }
+  const google = createModule(mqlFn)({})
+
+  const page = await google('test')
+  const markdown = await page.results[0].markdown()
+
+  t.is(markdown, '# article')
+  t.is(calls[1].url, 'https://example.com/article')
+  t.deepEqual(calls[1].opts.data, { markdown: { attr: 'markdown' } })
+})
+
 test('next() returns second page with correct offset', async t => {
   const calls = []
   const google = createModule(mqlStub(calls))({})
@@ -179,6 +220,7 @@ test('results without link skip html()', async t => {
 
   t.is(page.results[0].value, 'suggestion')
   t.is(page.results[0].html, undefined)
+  t.is(page.results[0].markdown, undefined)
 })
 
 test('extra data fields are forwarded to page', async t => {

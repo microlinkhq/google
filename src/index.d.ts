@@ -90,6 +90,7 @@ interface SearchResult {
   url: string
   description: string
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface SearchPage {
@@ -98,6 +99,7 @@ interface SearchPage {
   peopleAlsoAsk?: PeopleAlsoAsk[]
   relatedSearches?: RelatedSearch[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<SearchPage>
 }
 
@@ -109,11 +111,13 @@ interface NewsResult {
   publisher: string
   image?: { url: string }
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface NewsPage {
   results: NewsResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<NewsPage>
 }
 
@@ -126,11 +130,13 @@ interface ImageResult {
   creator?: string
   credit?: string
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface ImagesPage {
   results: ImageResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<ImagesPage>
 }
 
@@ -146,11 +152,13 @@ interface VideoResult {
   channel?: string
   date?: string
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface VideosPage {
   results: VideoResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<VideosPage>
 }
 
@@ -163,11 +171,13 @@ interface PlaceResult {
   url?: string
   cid: string
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface PlacesPage {
   results: PlaceResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<PlacesPage>
 }
 
@@ -190,11 +200,13 @@ interface MapPlaceResult {
   fid?: string
   place?: { id: string }
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface MapsPage {
   results: MapPlaceResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<MapsPage>
 }
 
@@ -207,11 +219,13 @@ interface ShoppingResult {
   rating?: { score: number; total: number; reviews?: number }
   id?: string
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface ShoppingPage {
   results: ShoppingResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<ShoppingPage>
 }
 
@@ -225,11 +239,13 @@ interface ScholarResult {
   pdf?: { url: string }
   id: string
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface ScholarPage {
   results: ScholarResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<ScholarPage>
 }
 
@@ -249,11 +265,13 @@ interface PatentResult {
   figures?: Array<{ image: { url: string }; thumbnail: { url: string } }>
   id?: string
   html(): Promise<string>
+  markdown(): Promise<string>
 }
 
 interface PatentsPage {
   results: PatentResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<PatentsPage>
 }
 
@@ -264,6 +282,7 @@ interface SuggestionResult {
 interface AutocompletePage {
   results: SuggestionResult[]
   html(): Promise<string>
+  markdown(): Promise<string>
   next(): Promise<AutocompletePage>
 }
 

@@ -9,7 +9,11 @@
 
 ## What is @microlink/google?
 
-`@microlink/google` is a Node.js package that turns Google products such as Search, News, Images, Maps, Shopping, Scholar, and Autocomplete into structured API responses. It is designed for developers building LLM tools, AI agents, research copilots, monitoring workflows, and products that need fresh Google data without parsing raw SERP HTML.
+The `@microlink/google` library is a Node.js package that turns Google products such as Search, News, Images, Maps, Shopping, Scholar, and Autocomplete into structured API responses.
+
+It is designed for developers building LLM tools, AI agents, research copilots, monitoring workflows, and products that need fresh Google data without parsing raw SERP HTML.
+
+Additionally, the library supports serializing the content into HTML or Markdown in case you want to create your own parser.
 
 ## Built for LLM tooling
 
@@ -117,16 +121,16 @@ This usually gives you a compact object containing entries like:
 }
 ```
 
-### Get HTML markup
+### Get page markup
 
-Any result containing a `url` exposes a lazy `.html()` method:
+Any result containing a `url` exposes lazy `.html()` and `.markdown()` methods:
 
 ```js
 const { results } = await google('node.js frameworks')
 
 for (const result of results) {
-  const html = await result.html()
-  console.log(html)
+  console.log(await result.html())
+  console.log(await result.markdown())
 }
 ```
 
@@ -162,7 +166,7 @@ Expose `google(query, options)` as a tool and let the model choose:
 
 - when to use Search vs News vs Scholar
 - when to request the next page
-- when to expand a result with `.html()`
+- when to expand a result with `.html()` or `.markdown()`
 
 ### 2. Multi-step research agents
 
@@ -423,7 +427,7 @@ Yes. The interface is simple enough to wrap in tool definitions for agent framew
 
 ### Can I paginate and inspect sources deeply?
 
-Yes. Use `.next()` for pagination and `.html()` on any result with a `url` when you need full page markup.
+Yes. Use `.next()` for pagination and `.html()` or `.markdown()` on any result with a `url` when you need full page markup.
 
 ## API
 

@@ -68,7 +68,7 @@
         "featureList": [
           "10 Google verticals in one API: Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete.",
           "Normalized fields such as title, url, description, price, rating, coordinates, and image metadata.",
-          "Lazy .html() page expansion and .next() pagination."
+          "Lazy .html()/.markdown() page expansion and .next() pagination."
         ],
         "keywords": "google search api,llm tools,ai agents,google news api,google scholar api,google maps api,node.js"
       },
@@ -105,7 +105,7 @@
             "name": "Can I paginate and inspect sources deeply?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Use .next() for pagination and .html() on any result with a url when you need full page markup."
+              "text": "Yes. Use .next() for pagination and .html() or .markdown() on any result with a url when you need full page markup."
             }
           }
         ]
@@ -153,7 +153,7 @@
     <ul>
       <li><strong>10 Google verticals in one API</strong> — Search, News, Images, Videos, Places, Maps, Shopping, Scholar, Patents, and Autocomplete.</li>
       <li><strong>Normalized data</strong> — Prices, ratings, coordinates, and images returned in consistent structures.</li>
-      <li><strong>Built for developers and LLMs</strong> — Lazy <code>.html()</code>, <code>.next()</code> pagination, parallelized requests (~1s latency).</li>
+      <li><strong>Built for developers and LLMs</strong> — Lazy <code>.html()</code>/<code>.markdown()</code>, <code>.next()</code> pagination, parallelized requests (~1s latency).</li>
     </ul>
     <h2>Install</h2>
     <pre><code>npm install @microlink/google</code></pre>
