@@ -6,8 +6,8 @@ const uglify = require('gulp-uglify')
 const gulp = require('gulp')
 
 const src = {
-  css: ['src/css/style.css'],
-  js: ['src/js/main.js']
+  css: ['docs/src/css/style.css'],
+  js: ['docs/src/js/main.js']
 }
 
 const dist = {
